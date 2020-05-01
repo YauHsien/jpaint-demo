@@ -1,10 +1,8 @@
-package id.yauhsien.demo.jpaint;
+package id.yauhsien.demo.paint;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class App implements CommandLineRunner {
