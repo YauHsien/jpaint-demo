@@ -2,8 +2,8 @@ package id.yauhsien.demo.paint.model;
 
 import java.util.Collection;
 
-public interface RectInterface {
-    Collection<? extends Pixel> getPixels();
+public interface Shape {
+    Collection<? extends Pixel> getPixels(Canvas canvas);
 
     int getW();
 

@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Rectangle implements RectInterface {
+public class Rectangle implements Shape {
 
     protected static ColorEnum color = ColorEnum.x;
     private int x1;
@@ -34,20 +34,21 @@ public class Rectangle implements RectInterface {
     }
 
     private void generateBorderPixels() {
+        int w = 1 + x2 - x1;
         for (int i = x1; i <= x2; i++)
-            border.add(new Pixel(i, y1, Rectangle.color));
+            border.add(new Pixel(w, i, y1, Rectangle.color));
         for (int i = y1; i <= y2; i++)
-            border.add(new Pixel(x1, i, Rectangle.color));
+            border.add(new Pixel(w, x1, i, Rectangle.color));
         if (x1 != x2)
             for (int i = y1; i <= y2; i++)
-                border.add(new Pixel(x2, i, Rectangle.color));
+                border.add(new Pixel(w, x2, i, Rectangle.color));
         if (y1 != y2)
             for (int i = x1; i <= x2; i++)
-                border.add(new Pixel(i, y2, Rectangle.color));
+                border.add(new Pixel(w, i, y2, Rectangle.color));
     }
 
     @Override
-    public Collection<? extends Pixel> getPixels() {
+    public Collection<? extends Pixel> getPixels(Canvas canvas) {
         return border;
     }
 

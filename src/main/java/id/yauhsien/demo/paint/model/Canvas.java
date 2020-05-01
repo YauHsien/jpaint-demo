@@ -1,48 +1,88 @@
 package id.yauhsien.demo.paint.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import id.yauhsien.demo.paint.util.PixelKey;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Canvas {
 
-    private RectInterface rectangle;
-    private Set<Pixel> pixels = new HashSet<>();
-    private RectInterface prevCmd;
+    private Shape rectangle;
+    private Map<PixelKey, Pixel> pixelsMap = new HashMap<>();
+    private Shape prevShape;
 
     public Canvas(int w, int h) {
-        this.rectangle = new Rectangle(0, w+1, 0, h+1);
+        this.rectangle = new Rectangle(1, w, 1, h);
     }
 
     public int getW() {
-        return rectangle.getW() - 2;
+        return rectangle.getW();
     }
 
     public int getH() {
-        return rectangle.getH() - 2;
+        return rectangle.getH();
     }
 
-    public void setLine(Line line) {
-        this.prevCmd = line;
+    public ColorEnum getColor(int x, int y) {
+        PixelKey key = new PixelKey(this.getW(), x, y);
+        return pixelsMap.getOrDefault(key, new Pixel(x, y, ColorEnum.background)).getColor();
     }
 
-    public void setRectangle(Rectangle rectangle) {
-        this.prevCmd = rectangle;
+    public Map<PixelKey, Pixel> getPixelsMap() {
+        return pixelsMap;
     }
 
-    public void applyLine(Line line) {
-        this.setLine(line);
-        this.applyPrevCmd();
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String horizon = "-".repeat(this.getW()+2);
+        stringBuilder.append(horizon);
+        stringBuilder.append('\n');
+        for (int i = 1; i <= this.getH(); i++) {
+            stringBuilder.append('|');
+            for (int j = 1; j <= this.getW(); j++) {
+                ColorEnum color = pixelsMap.getOrDefault(new PixelKey(this.getW(), j, i), new Pixel(j, i, ColorEnum.background)).getColor();
+                stringBuilder.append(color);
+            }
+            stringBuilder.append("|\n");
+        }
+        stringBuilder.append(horizon);
+        stringBuilder.append('\n');
+        return stringBuilder.toString();
     }
 
-    public void applyRectanble(Rectangle rectangle) {
-        this.setRectangle(rectangle);
-        this.applyPrevCmd();
+    public void setPrevShape(Line line) {
+        this.prevShape = line;
     }
 
-    public void applyPrevCmd() {
-        if (this.prevCmd == null)
+    public void setPrevShape(Rectangle rectangle) {
+        this.prevShape = rectangle;
+    }
+
+    public void setPrevShape(BucketPainting bucketPainting) {
+        this.prevShape = bucketPainting;
+    }
+
+    public void applyPrevShape() {
+        if (this.prevShape == null)
             return;
-        pixels.addAll(this.prevCmd.getPixels());
-        this.prevCmd = null;
+        this.prevShape.getPixels(this)
+                .forEach(pixel -> pixelsMap.put(new PixelKey(this.getW(), pixel.getColumn(), pixel.getRow()), pixel));
+        this.prevShape = null;
+    }
+
+    public void applyShape(Line line) {
+        this.setPrevShape(line);
+        this.applyPrevShape();
+    }
+
+    public void applyShape(Rectangle rectangle) {
+        this.setPrevShape(rectangle);
+        this.applyPrevShape();
+    }
+
+    public void applyShape(BucketPainting bucketPainting) {
+        this.setPrevShape(bucketPainting);
+        this.applyPrevShape();
     }
 }

@@ -1,8 +1,13 @@
 package id.yauhsien.demo.paint;
 
+import id.yauhsien.demo.paint.ui.ReadEvalPrintLoop;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicReference;
 
 @SpringBootApplication
 public class App implements CommandLineRunner {
@@ -13,6 +18,7 @@ public class App implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("hello,world");
+        ReadEvalPrintLoop repl = new ReadEvalPrintLoop();
+        repl.init();
     }
 }
