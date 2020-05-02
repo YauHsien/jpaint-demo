@@ -1,7 +1,5 @@
 package id.yauhsien.demo.paint.util;
 
-import id.yauhsien.demo.paint.model.Pixel;
-
 public class PixelKey {
 
     private int pivot;

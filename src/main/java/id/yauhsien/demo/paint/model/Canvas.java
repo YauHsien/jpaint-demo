@@ -9,7 +9,6 @@ public class Canvas {
 
     private Shape rectangle;
     private Map<PixelKey, Pixel> pixelsMap = new HashMap<>();
-    private Shape prevShape;
 
     public Canvas(int w, int h) {
         this.rectangle = new Rectangle(1, w, 1, h);
@@ -51,38 +50,8 @@ public class Canvas {
         return stringBuilder.toString();
     }
 
-    public void setPrevShape(Line line) {
-        this.prevShape = line;
-    }
-
-    public void setPrevShape(Rectangle rectangle) {
-        this.prevShape = rectangle;
-    }
-
-    public void setPrevShape(BucketPainting bucketPainting) {
-        this.prevShape = bucketPainting;
-    }
-
-    public void applyPrevShape() {
-        if (this.prevShape == null)
-            return;
-        this.prevShape.getPixels(this)
+    public void applyShape(Shape shape) {
+        shape.getPixels(this)
                 .forEach(pixel -> pixelsMap.put(new PixelKey(this.getW(), pixel.getColumn(), pixel.getRow()), pixel));
-        this.prevShape = null;
-    }
-
-    public void applyShape(Line line) {
-        this.setPrevShape(line);
-        this.applyPrevShape();
-    }
-
-    public void applyShape(Rectangle rectangle) {
-        this.setPrevShape(rectangle);
-        this.applyPrevShape();
-    }
-
-    public void applyShape(BucketPainting bucketPainting) {
-        this.setPrevShape(bucketPainting);
-        this.applyPrevShape();
     }
 }

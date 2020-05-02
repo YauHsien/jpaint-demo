@@ -1,7 +1,5 @@
 package id.yauhsien.demo.paint.model;
 
-import id.yauhsien.demo.paint.util.PixelKey;
-
 public class Pixel {
 
     private int column;

@@ -1,31 +1,30 @@
 package id.yauhsien.demo.paint.ui;
 
 import id.yauhsien.demo.paint.model.*;
-import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.Reader;
 
-public class ReadEvalPrintLoop {
+public class Session {
 
     private Canvas canvas;
 
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
-    }
-
-    public void init() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    public void doReadEvalPrintLoop(MessageEnum prompt, Reader reader) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(reader);
         StageEnum stage = StageEnum.Init;
         boolean loop = true;
         do {
-            System.out.print(MessageEnum.EnterCommand);
-            String cmdLine = bufferedReader.readLine().trim();
+            String cmdLine;
+            if (prompt == MessageEnum.Nothing) {
+                cmdLine = bufferedReader.readLine();
+                cmdLine = cmdLine.trim();
+                System.out.println(cmdLine);
+            }
+            else{
+                System.out.print(prompt.toString());
+                cmdLine = bufferedReader.readLine().trim();
+            }
             String[] commandLine = cmdLine.split("\\s+");
             try {
                 stage = StageEnum.CmdCheck;
@@ -102,7 +101,7 @@ public class ReadEvalPrintLoop {
                 }
             }
             stage = StageEnum.Print;
-            if (this.canvas != null)
+            if (loop == true && this.canvas != null)
                 System.out.println(this.canvas.toString());
         }
         while (loop);
@@ -119,24 +118,6 @@ public class ReadEvalPrintLoop {
 
         StageEnum(String meaning) {
             this.meaning = meaning;
-        }
-    }
-
-    private static enum MessageEnum {
-        EnterCommand("Enter command: "),
-        BadCommand("Bad command.\n"),
-        NoCanvas("No canvas.\n"),
-        OK("OK.");
-
-        private String meaning;
-
-        MessageEnum(String meaning) {
-            this.meaning = meaning;
-        }
-
-        @Override
-        public String toString() {
-            return meaning;
         }
     }
 }
