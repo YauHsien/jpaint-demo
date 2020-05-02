@@ -1,5 +1,8 @@
 package id.yauhsien.demo.paint.model;
 
+/**
+ * Simple color represented by symbol.
+ */
 public enum ColorEnum {
 
     a('a'),b('b'),c('c'),d('d'),e('e'),f('f'),g('g'),

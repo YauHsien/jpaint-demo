@@ -17,6 +17,11 @@ public class App implements CommandLineRunner {
         SpringApplication.run(App.class, args);
     }
 
+    /**
+     * Usage: Program ["Command{\nCommand...}"]
+     * @param args Program argument args[0], if existing, will be taken as scripts.
+     * @throws Exception Such as IOException
+     */
     @Override
     public void run(String... args) throws Exception {
         Session session = new Session();

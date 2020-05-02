@@ -6,6 +6,12 @@ public class PixelKey {
     private int column;
     private int row;
 
+    /**
+     * Create a key of a pixel, for usages on HashSet and HashMap.
+     * @param width Base number for hash-code creation
+     * @param column X coordinate
+     * @param row Y coordinate
+     */
     public PixelKey(int width, int column, int row) {
         this.pivot = width;
         this.column = column;

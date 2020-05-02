@@ -1,5 +1,8 @@
 package id.yauhsien.demo.paint.model;
 
+/**
+ * Allowed command list.
+ */
 public enum CommandEnum {
 
     Q("Q", "Quit"),

@@ -13,6 +13,13 @@ public class Rectangle implements Shape {
     private int y2;
     private Set<Pixel> border = new HashSet<>();
 
+    /**
+     * Create a rectangle. Border pixels are built upon rectangle creation.
+     * @param x1 First x coordinate
+     * @param x2 Second x coordinate
+     * @param y1 First y coordinate
+     * @param y2 Second y coordinate
+     */
     public Rectangle(int x1, int x2, int y1, int y2) {
         if (x1 > x2) {
             this.x1 = x2;
@@ -33,6 +40,9 @@ public class Rectangle implements Shape {
         generateBorderPixels();
     }
 
+    /**
+     * Build fence pixels.
+     */
     private void generateBorderPixels() {
         int w = 1 + x2 - x1;
         for (int i = x1; i <= x2; i++)

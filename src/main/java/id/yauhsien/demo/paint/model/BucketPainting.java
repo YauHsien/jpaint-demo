@@ -14,6 +14,11 @@ public class BucketPainting implements Shape {
         this.color = color;
     }
 
+    /**
+     * Get pixels by Flood Fill Algorithm.
+     * @param canvas The environment for FFA
+     * @return flood pixels
+     */
     @Override
     public Collection<? extends Pixel> getPixels(Canvas canvas) {
         Set<Pixel> pixels = new HashSet<>();

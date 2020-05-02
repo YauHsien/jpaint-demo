@@ -10,6 +10,12 @@ public class Session {
 
     private Canvas canvas;
 
+    /**
+     * Perform Read-Eval-Print-Loop evaluation. If the given prompt string is nothing, it won't appear on the console.
+     * @param prompt Given prompt string
+     * @param reader Input reader
+     * @throws IOException By using BufferedReader
+     */
     public void doReadEvalPrintLoop(MessageEnum prompt, Reader reader) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(reader);
         StageEnum stage = StageEnum.Init;
@@ -81,6 +87,9 @@ public class Session {
                         loop = false;
                         break;
                 }
+                stage = StageEnum.Print;
+                if (loop == true && this.canvas != null)
+                    System.out.println(this.canvas.toString());
             }
             catch (NumberFormatException ex) {
                 if (stage == StageEnum.CmdCheck)
@@ -100,13 +109,22 @@ public class Session {
                         throw ex;
                 }
             }
-            stage = StageEnum.Print;
-            if (loop == true && this.canvas != null)
-                System.out.println(this.canvas.toString());
+            catch (UnsupportedOperationException ex) {
+                switch (stage) {
+                    case LogicCheck:
+                        System.out.println(ex.getMessage());
+                        break;
+                    default:
+                        throw ex;
+                }
+            }
         }
         while (loop);
     }
 
+    /**
+     * Work state in REPL.
+     */
     private static enum StageEnum {
 
         Init("Initial"),

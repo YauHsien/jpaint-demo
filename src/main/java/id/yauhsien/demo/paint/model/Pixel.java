@@ -7,25 +7,36 @@ public class Pixel {
     private ColorEnum color;
     private int pivot;
 
+    /**
+     * Create a pixel.
+     * @param column X coordinate
+     * @param row Y coordinate
+     */
     public Pixel(int column, int row) {
         this.column = column;
         this.row = row;
         this.color = ColorEnum.background;
     }
 
-    public Pixel(int pivot, int column, int row) {
-        this.column = column;
-        this.row = row;
-        this.pivot = pivot;
-        this.color = ColorEnum.background;
-    }
-
+    /**
+     * Create a pixel.
+     * @param column X coordinate
+     * @param row Y coordinate
+     * @param color A pixel depth attribute
+     */
     public Pixel(int column, int row, ColorEnum color) {
         this.column = column;
         this.row = row;
         this.color = color;
     }
 
+    /**
+     * Create a pixel for comparison.
+     * @param pivot Base number for hash-code creation, normally it applies to width or height
+     * @param column X coordinate
+     * @param row Y coordinate
+     * @param color A pixel depth attribute
+     */
     public Pixel(int pivot, int column, int row, ColorEnum color) {
         this.column = column;
         this.row = row;

@@ -2,12 +2,18 @@ package id.yauhsien.demo.paint.model;
 
 public enum BorderColorEnum {
 
-    virtical('|'),
-    horizontal('-');
+    vertical("|"),
+    closingVertical("|\n"),
+    horizontal("-");
 
-    private char character;
+    private String symbols;
 
-    BorderColorEnum(char character) {
-        this.character = character;
+    BorderColorEnum(String symbols) {
+        this.symbols = symbols;
+    }
+
+    @Override
+    public String toString() {
+        return symbols;
     }
 }
